@@ -1,4 +1,36 @@
-var input = `  810  679   10
+var input = getInput();
+var triangles = input.split('\n');
+
+function assert (b) {
+  if (b !== true) {
+    throw new Error();
+  }
+}
+
+function triangleIsPossible (triangle) {
+  var lengths = triangle.match(/[0-9]+/g).map(i => parseInt(i, 10));
+  assert(lengths.length === 3);
+  assert(lengths[0] > 0);
+  assert(lengths[1] > 0);
+  assert(lengths[2] > 0);
+
+  return (lengths[0] + lengths[1] > lengths[2] &&
+          lengths[0] + lengths[2] > lengths[1] &&
+          lengths[1] + lengths[2] > lengths[0]);
+}
+
+assert(triangleIsPossible('  3  4  5'));
+assert(!triangleIsPossible('  5  10  25'));
+
+
+var possibleTriangles = triangles
+    .map(triangleIsPossible)
+    .reduce((sum, possible) => sum + (possible ? 1 : 0), 0);
+
+console.log(`${possibleTriangles} of ${triangles.length} are possible triangles.`);
+
+function getInput () {
+  return `  810  679   10
   783  255  616
   545  626  626
    84  910  149
@@ -1597,33 +1629,4 @@ var input = `  810  679   10
   850  394  702
    68  744  665
   919  923  873`;
-
-var triangles = input.split('\n');
-
-function assert (b) {
-  if (b !== true) {
-    throw new Error();
-  }
 }
-
-function triangleIsPossible (triangle) {
-  var lengths = triangle.match(/[0-9]+/g).map(i => parseInt(i, 10));
-  assert(lengths.length === 3);
-  assert(lengths[0] > 0);
-  assert(lengths[1] > 0);
-  assert(lengths[2] > 0);
-
-  return (lengths[0] + lengths[1] > lengths[2] &&
-          lengths[0] + lengths[2] > lengths[1] &&
-          lengths[1] + lengths[2] > lengths[0]);
-}
-
-assert(triangleIsPossible('  3  4  5'));
-assert(!triangleIsPossible('  5  10  25'));
-
-
-var possibleTriangles = triangles
-    .map(triangleIsPossible)
-    .reduce((sum, possible) => sum + (possible ? 1 : 0), 0);
-
-console.log(`${possibleTriangles} of ${triangles.length} are possible triangles.`);
