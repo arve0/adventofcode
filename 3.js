@@ -1,33 +1,62 @@
-var input = getInput();
-var triangles = input.split('\n');
-
 function assert (b) {
   if (b !== true) {
     throw new Error();
   }
 }
 
-function triangleIsPossible (triangle) {
-  var lengths = triangle.match(/[0-9]+/g).map(i => parseInt(i, 10));
-  assert(lengths.length === 3);
-  assert(lengths[0] > 0);
-  assert(lengths[1] > 0);
-  assert(lengths[2] > 0);
-
-  return (lengths[0] + lengths[1] > lengths[2] &&
-          lengths[0] + lengths[2] > lengths[1] &&
-          lengths[1] + lengths[2] > lengths[0]);
+function rowTriangles (str) {
+  return str.split('\n').map(s => s.match(/[0-9]+/g).map(i => parseInt(i, 10)));
 }
 
-assert(triangleIsPossible('  3  4  5'));
-assert(!triangleIsPossible('  5  10  25'));
+function triangleIsPossible (triangle) {
+  debugger;
+  assert(triangle.length === 3);
+  assert(triangle[0] > 0);
+  assert(triangle[1] > 0);
+  assert(triangle[2] > 0);
+
+  return (triangle[0] + triangle[1] > triangle[2] &&
+          triangle[0] + triangle[2] > triangle[1] &&
+          triangle[1] + triangle[2] > triangle[0]);
+}
+
+assert(triangleIsPossible(rowTriangles('  3  4  5')[0]));
+assert(!triangleIsPossible(rowTriangles('  5  10  25')[0]));
 
 
-var possibleTriangles = triangles
+var possibleTriangles = rowTriangles(getInput())
     .map(triangleIsPossible)
     .reduce((sum, possible) => sum + (possible ? 1 : 0), 0);
 
-console.log(`${possibleTriangles} of ${triangles.length} are possible triangles.`);
+console.log(`Row: ${possibleTriangles} are possible triangles.`);
+
+// part two
+function columnTriangles (str) {
+  var numbers = str.match(/[0-9]+/g).map(i => parseInt(i, 10));
+
+  var triangles = [];
+  for (var i = 0; i < numbers.length - 8; i += 9) {
+    triangles.push([
+      numbers[i + 0],
+      numbers[i + 3],
+      numbers[i + 6] ]);
+    triangles.push([
+      numbers[i + 1],
+      numbers[i + 4],
+      numbers[i + 7] ]);
+    triangles.push([
+      numbers[i + 2],
+      numbers[i + 5],
+      numbers[i + 8] ]);
+  }
+  return triangles;
+}
+
+var possibleTriangles = columnTriangles(getInput())
+    .map(triangleIsPossible)
+    .reduce((sum, possible) => sum + (possible ? 1 : 0), 0);
+
+console.log(`Column: ${possibleTriangles} are possible triangles.`);
 
 function getInput () {
   return `  810  679   10
