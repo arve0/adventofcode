@@ -23,12 +23,10 @@ var actions = {
   'turn on': function (cmd) {
     ctx.fillStyle = 'white';
     ctx.fillRect(cmd.start[0], cmd.start[1], cmd.dx, cmd.dy);
-    // ctx.fill();
   },
   'turn off': function (cmd) {
     ctx.fillStyle = 'black';
     ctx.fillRect(cmd.start[0], cmd.start[1], cmd.dx, cmd.dy);
-    // ctx.fill();
   },
   'toggle': function (cmd) {
     var img = ctx.getImageData(cmd.start[0], cmd.start[1], cmd.dx, cmd.dy);
@@ -63,6 +61,7 @@ for (var i = 0; i < img.data.length; i += 4) {
     on += 1;
   }
 }
+
 setTimeout(() => {
   alert(`Number of lights turned on: ${on}`);
 }, 1000);  // let canvas draw
