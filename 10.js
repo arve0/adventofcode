@@ -48,8 +48,7 @@ var outputs = input.reduce((arr, i) => {
 values.forEach(v => bots.pick('num', v.to).values.push(v.value));
 
 function whoIsSorting (bots, a, b, outputs) {
-  var found = false;
-  while (!found) {
+  while (bots.reduce((remaining, b) => remaining + b.values.length, 0) > 0) {
     for (var bot of bots) {
       if (bot.values.length < 2) {
         continue;
@@ -61,8 +60,6 @@ function whoIsSorting (bots, a, b, outputs) {
       if ((max === a && min === b) ||
           (min === a && max === b)) {
         console.log(`Bot ${bot.num} is sorting ${a} and ${b}.`);
-        found = true;
-        break;
       }
       if (bot.lowType === 'output') {
         outputs[bot.lowNum].push(min);
