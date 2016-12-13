@@ -41,13 +41,7 @@ function ShortestPath (root) {
       process.stdout.write(`\rCurrent steps: ${currentSteps}, Configurations: ${configurations.length}`);
       for (var floors of configurations) {
         if (floors[3].length === root.things) {
-          // finished, print solution
-          console.log();  // new line
-          while (floors.parent) {
-            console.log(print(floors));
-            floors = floors.parent;
-          }
-          console.log(print(floors));  // print root too
+          printSteps(floors);
           console.log(`Solved with ${currentSteps} steps.`);
           return currentSteps;
         }
@@ -67,7 +61,6 @@ function ShortestPath (root) {
     var child = copy(parent);
     child.parent = parent;
     child.elevator += direction;
-    child.steps += 1;
     // remove from previous floor
     child[parent.elevator].remove(things);
     // add to next floor
@@ -183,6 +176,18 @@ function print (floors) {
   return str;
 }
 
+/**
+ * Tracks back to find all steps of solution.
+ */
+function printSteps (floors) {
+  console.log();  // new line
+  while (floors.parent) {
+    console.log(print(floors));
+    floors = floors.parent;
+  }
+  console.log(print(floors));  // print root too
+}
+
 function allowedFloor (floor) {
   for (var thing of floor) {
     if (thing.chip) {
@@ -206,8 +211,9 @@ function equivalentFloors (floors) {
     var chips = 0;
     var generators = 0;
     for (var i = 0; i < floors[j].length; i += 1) {
-      if (floors[j][i] === (floors[j][i + 1]||'').type) {
+      if (floors[j][i].type === (floors[j][i + 1]||'').type) {
         pairs += 1;
+        chips -= 1;
       } else if (floors[j][i].generator) {
         generators += 1;
       } else {
@@ -236,3 +242,13 @@ The fourth floor contains nothing relevant.`;
 }
 
 ShortestPath(parse(getInput())).solve();
+
+// part two
+function getInput2 () {
+  return `The first floor contains a promethium generator, a promethium-compatible microchip, an elerium generator, an elerium-compatible microchip, a dilithium generator and a dilithium-compatible microchip.
+The second floor contains a cobalt generator, a curium generator, a ruthenium generator, and a plutonium generator.
+The third floor contains a cobalt-compatible microchip, a curium-compatible microchip, a ruthenium-compatible microchip, and a plutonium-compatible microchip.
+The fourth floor contains nothing relevant.`;
+}
+
+ShortestPath(parse(getInput2())).solve();
