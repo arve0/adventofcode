@@ -1,0 +1,23 @@
+{
+  "name": "adventofcode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.js",
+  "dependencies": {
+    "roman-decimal": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "eslint *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arve0/adventofcode.git"
+  },
+  "author": "Arve Seljebu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arve0/adventofcode/issues"
+  },
+  "homepage": "https://github.com/arve0/adventofcode#readme"
+}
