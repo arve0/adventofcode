@@ -1,5 +1,8 @@
 package adventofcode;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Day1 {
 
 	public static void main(String[] args) {
@@ -7,6 +10,7 @@ public class Day1 {
 		int x = 0;
 		int y = 0;
 		int direction = 0; // 0 north, 1 east, 2 south, 3 west
+		Been been = new Been();
 		
 		String[] instructions = input.split(", ");
 		
@@ -21,21 +25,44 @@ public class Day1 {
 			direction = Math.floorMod(direction, 4);
 
 			int length = Integer.parseInt(instruction.substring(1));
-			if (direction == 0) {
-				y += length;				
-			} else if (direction == 1) {
-				x += length;
-			} else if (direction == 2) {
-				y-= length;
-			} else {
-				x -= length;
+			for (; length > 0; length--) {
+				if (direction == 0) {
+					y++;		
+				} else if (direction == 1) {
+					x++;
+				} else if (direction == 2) {
+					y--;
+				} else {
+					x--;
+				}				
+				if (been.visit(x, y)) {
+					System.out.println("Been here before: " + Been.toCoordinate(x, y));
+					System.out.println("Total length is " + (Math.abs(x) + Math.abs(y)));		
+				}
 			}
 //			System.out.println("Direction is " + direction);
 //			System.out.println("Coordinate is " + x + "," + y);
 		}
-		System.out.println("Coordinate is " + x + "," + y);
-		System.out.println("Total length is " + (Math.abs(x) + Math.abs(y)));
-		
+		System.out.println("Finished all instructions");
+		System.out.println("Coordinate is " + Been.toCoordinate(x, y));
+		System.out.println("Total length is " + (Math.abs(x) + Math.abs(y)));		
 	}
+}
 
+class Been {
+	Set<String> visited = new HashSet<String>();
+	Been() {
+		visited.add(toCoordinate(0, 0));
+	}
+	static String toCoordinate(int x, int y) {
+		return x + "," + y;
+	}
+	boolean visit(int x, int y) {
+		String coordinate = toCoordinate(x, y);
+		if (visited.contains(coordinate)) {
+			return true;
+		}
+		visited.add(coordinate);
+		return false;
+	}
 }
