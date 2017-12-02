@@ -6,8 +6,11 @@ package adventofcode;
  * - and a + c should be larger than b
  */
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Day3 {
 
@@ -15,13 +18,62 @@ public class Day3 {
 		FileReader file = new FileReader("input3.txt");
 		
 		int count = 0;
-		for (String line : file.readLines()) {
-			Triangle t = new Triangle(line);
+		for (String row : file.readLines()) {
+			Triangle t = new Triangle(row);
+			count += t.possible ? 1 : 0;
+		}
+		System.out.println(count);
+
+		count = 0;
+		for (String col : new Columns(file)) {
+			Triangle t = new Triangle(col);
 			count += t.possible ? 1 : 0;
 		}
 		System.out.println(count);
 	}
+}
 
+class Columns implements Iterable<String> {
+	String[] rows = new String[3];
+	FileReader file;
+	List<String> lines;
+	int i = 0;
+
+	Columns(FileReader f) {
+		file = f;
+		lines = f.readLines().stream().map(s -> s.trim()).collect(Collectors.toList());
+	}
+	
+	public Iterator<String> iterator() {
+		return new Iterator<String>() {
+			private int currentIndex = 0;
+			
+			@Override
+            public boolean hasNext() {
+                return currentIndex < lines.size();
+            }
+
+            @Override
+            public String next() {
+                return getColumn(currentIndex++);
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+		};
+	}
+
+	String getColumn(int i) {
+		int row = i / 3 * 3;
+		int col = i % 3;
+//		System.out.println(row + "," + col);
+		String a = lines.get(row).split(" +")[col];
+		String b = lines.get(row + 1).split(" +")[col];
+		String c = lines.get(row + 2).split(" +")[col];
+		return a + " " + b + " " + c;
+	}
 }
 
 class Triangle {
@@ -43,5 +95,8 @@ class Triangle {
 				sides[0] + sides[1] > sides[2] &&
 				sides[1] + sides[2] > sides[0] &&
 				sides[2] + sides[0] > sides[1];
+//		if (!possible) {
+//			System.out.println(line);
+//		}
 	}
 }
