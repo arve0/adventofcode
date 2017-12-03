@@ -1,6 +1,8 @@
 package adventofcode;
 
 import java.security.MessageDigest;
+import java.util.Arrays;
+
 import javax.xml.bind.DatatypeConverter;
 
 /**
@@ -11,6 +13,7 @@ public class Day5 {
 		try {
 			FindPassword fp = new FindPassword("ffykfhsq");
 			System.out.println(fp.crackPassword(8));
+			System.out.println(fp.crackSecondPassword(8));
 		} catch (Exception e) {
 			System.out.println(e);
 			System.exit(1);
@@ -34,18 +37,46 @@ class FindPassword {
 		int i = 0;
 		String password = "";
 		while (i < n) {
-			password += next();
+			password += next().substring(5, 6);
 			System.out.println(password);
 			i++;
 		}
 		return password;
 	}
 
+	public String crackSecondPassword(int n) {
+		index = 0;
+		String[] password = new String[n];
+
+		while (!isFull(password)) {
+			String hash = next();
+			try {
+				int i = Integer.parseInt(hash.substring(5, 6));
+				if (i < 8 && password[i] == null) {
+					password[i] = hash.substring(6, 7);
+					System.out.println(Arrays.toString(password));
+				}
+			} catch (NumberFormatException e) {
+				// pass
+			}
+		}
+		return String.join("", password);
+	}
+
+	private static boolean isFull(Object[] o) {
+		for (int i = 0; i < o.length; i++) {
+			if (o[i] == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	private String next() {
 		do {
 			index++;
 		} while(!startsWithFiveZeroes());
-		return digest().substring(5, 6);
+		return digest();
 	}
 
 	private String digest() {
