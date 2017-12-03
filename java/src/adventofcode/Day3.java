@@ -93,10 +93,9 @@ class Triangle {
 			String g = match.group(1);
 			sides[count++] = Integer.parseInt(g);
 		}
-		possible = count == 3 && sides[0] + sides[1] > sides[2] && sides[1] + sides[2] > sides[0]
-				&& sides[2] + sides[0] > sides[1];
-		// if (!possible) {
-		// System.out.println(line);
-		// }
+		possible = count == 3 && 
+				sides[0] + sides[1] > sides[2] && 
+				sides[1] + sides[2] > sides[0] && 
+				sides[2] + sides[0] > sides[1];
 	}
 }
