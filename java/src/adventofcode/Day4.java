@@ -16,7 +16,13 @@ public class Day4 {
 		int sum = 0;
 		for (String row : file.readLines()) {
 			Room r = new Room(row);
-			sum += r.validChecksum() ? r.id : 0;
+			if (r.validChecksum()) {
+				sum += r.id;
+				String name = r.decryptName();
+				if (name.contains("north") && name.contains("pole")) {
+					System.out.println(name + r);
+				}
+			}
 		}
 		System.out.println(sum);
 	}
@@ -30,7 +36,7 @@ class Room {
 	String checksum;
 	boolean valid;
 	Map<Character, Integer> chars = new TreeMap<Character, Integer>();
-	
+	private String alphabet = "abcdefghijklmnopqrstuvwxyz";
 	
 	Room(String r) {
 		row = r;
@@ -61,6 +67,18 @@ class Room {
 	
 	public String toString() {
 		return "name: " + name + " id: " + id + " checksum: " + checksum;
+	}
+	
+	public String decryptName() {
+		int shift = Math.floorMod(id, alphabet.length());
+		String decrypted = "";
+		for (char c : name.toCharArray()) {
+			int i = alphabet.indexOf(c);
+			i += shift;
+			i = Math.floorMod(i, alphabet.length());
+			decrypted += alphabet.substring(i, i + 1);
+		}
+		return decrypted;
 	}
 }
 
