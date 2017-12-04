@@ -16,6 +16,7 @@ public class Day6 {
 	public static void main(String[] args) {
 		Day6 me = new Day6();
 		System.out.println(me.findMostFrequentCharacters());
+		System.out.println(me.findLeastFrequentCharacters());
 	}
 
 	Day6() {
@@ -36,12 +37,21 @@ public class Day6 {
 		String solution = "";
 		for (int i = 0; i < rowLength; i++) {
 			List<String> col = getColumn(i);
-			solution += findMostFrequentCharacter(col);
+			solution += findMostFrequentCharacter(col, false);
 		}
 		return solution;
 	}
 
-	private String findMostFrequentCharacter(List<String> chars) {
+	private String findLeastFrequentCharacters() {
+		String solution = "";
+		for (int i = 0; i < rowLength; i++) {
+			List<String> col = getColumn(i);
+			solution += findMostFrequentCharacter(col, true);
+		}
+		return solution;
+	}
+
+	private String findMostFrequentCharacter(List<String> chars, boolean reverse) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		for (String c : chars) {
 			if (map.containsKey(c)) {
@@ -52,15 +62,16 @@ public class Day6 {
 			}
 		}
 
+		int direction = reverse ? 1 : -1;
 		List<Map.Entry<String, Integer>> m = map.entrySet().stream()
-		      .sorted((a, b) -> {
-						int valueSort = a.getValue().compareTo(b.getValue());
-						if (valueSort == -1 || valueSort == 1) {
-							return -valueSort;
-						}
-						return a.getKey().compareTo(b.getKey());
-					})
-					.collect(Collectors.toList());
+			.sorted((a, b) -> {
+				int valueSort = a.getValue().compareTo(b.getValue());
+				if (valueSort == -1 || valueSort == 1) {
+					return direction * valueSort;
+				}
+				return a.getKey().compareTo(b.getKey());
+			})
+			.collect(Collectors.toList());
 
 		return m.get(0).getKey();
 	}
