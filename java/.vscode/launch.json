@@ -6,7 +6,7 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Debug (Launch)-Test<adventofcode>",
+      "name": "Test",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
@@ -17,7 +17,7 @@
     },
     {
       "type": "java",
-      "name": "Debug (Launch)-Day1<adventofcode>",
+      "name": "Day1",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
@@ -28,7 +28,7 @@
     },
     {
       "type": "java",
-      "name": "Debug (Launch)-Day2<adventofcode>",
+      "name": "Day2",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
@@ -39,7 +39,7 @@
     },
     {
       "type": "java",
-      "name": "Debug (Launch)-Day3<adventofcode>",
+      "name": "Day3",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
@@ -50,7 +50,7 @@
     },
     {
       "type": "java",
-      "name": "Debug (Launch)-Day4<adventofcode>",
+      "name": "Day4",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
@@ -61,7 +61,7 @@
     },
     {
       "type": "java",
-      "name": "Debug (Launch)-Day5<adventofcode>",
+      "name": "Day5",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
@@ -72,7 +72,7 @@
     },
     {
       "type": "java",
-      "name": "Debug (Launch)-Day6<adventofcode>",
+      "name": "Day6",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
@@ -83,7 +83,7 @@
     },
     {
       "type": "java",
-      "name": "Debug (Launch)-Day7<adventofcode>",
+      "name": "Day7",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
@@ -94,10 +94,14 @@
     },
     {
       "type": "java",
-      "name": "Debug (Attach)",
-      "request": "attach",
-      "hostName": "localhost",
-      "port": 0
+      "name": "Day8",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "adventofcode.Day8",
+      "projectName": "adventofcode",
+      "args": ""
     }
   ]
 }
