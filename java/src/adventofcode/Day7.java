@@ -11,14 +11,19 @@ public class Day7 {
 		FileReader file = new FileReader("input7.txt");
 
 		int count = 0;
+		int ssl = 0;
 		for (String row : file.readLines()) {
 			IPAddress ip = new IPAddress(row);
 			if(ip.TLS()) {
 				count += 1;
 			}
+			if (ip.SSL()) {
+				ssl += 1;
+			}
 		}
 
 		System.out.println(count);
+		System.out.println(ssl);
 	}
 }
 
@@ -69,6 +74,34 @@ class IPAddress {
 		for (String address : addresses) {
 			if (hasAbba(address)) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	private List<String> getAbas(List<String> str) {
+		List<String> abas = new ArrayList<String>();
+		for (String s : str) {
+			for (int i = 0; i < s.length() - 2; i++) {
+				int a1 = s.codePointAt(i);
+				int b = s.codePointAt(i + 1);
+				int a2 = s.codePointAt(i + 2);
+				if (a1 == a2 && a1 != b) {
+					abas.add(s.substring(i, i + 3));
+				}
+			}
+		}
+		return abas;
+	}
+
+	public boolean SSL() {
+		List<String> abas = getAbas(addresses);
+		for (String hypernet : hypernets) {
+			for (String aba : abas) {
+				String bab = aba.substring(1) + aba.substring(1, 2);
+				if (hypernet.contains(bab)) {
+					return true;
+				}
 			}
 		}
 		return false;
