@@ -8,6 +8,7 @@ public class Day9 {
 	public static void main(String[] args) {
 		for (String row : new FileReader("input9.txt").readLines()) {
 			System.out.println(new Decompress(row).simpleDecompress());
+			System.out.println(new Decompress(row).complexDecompress());
 		}
 	}
 }
@@ -43,5 +44,28 @@ class Decompress {
 		}
 
 		return size;
+	}
+
+	public int complexDecompress() {
+		return complexDecompress(str);
+	}
+
+	private int complexDecompress(String str) {
+		if (str.length() == 0) {
+			return 0;
+		}
+		int start = str.indexOf('(');
+		if (start == -1) {
+			return str.length();
+		} else if (start > 0) {
+			return start + complexDecompress(str.substring(start));
+		}
+		int x = str.indexOf('x');
+		int end = str.indexOf(')');
+
+		int num = Integer.parseInt(str.substring(start + 1, x));
+		int multiply = Integer.parseInt(str.substring(x + 1, end));
+
+		return multiply * complexDecompress(str.substring(end + 1));
 	}
 }

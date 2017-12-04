@@ -1,0 +1,10 @@
+/Users/arve/git/adventofcode/dotnet/day1/bin/Debug/netcoreapp2.0/day1.deps.json
+/Users/arve/git/adventofcode/dotnet/day1/bin/Debug/netcoreapp2.0/day1.runtimeconfig.json
+/Users/arve/git/adventofcode/dotnet/day1/bin/Debug/netcoreapp2.0/day1.runtimeconfig.dev.json
+/Users/arve/git/adventofcode/dotnet/day1/bin/Debug/netcoreapp2.0/day1.dll
+/Users/arve/git/adventofcode/dotnet/day1/bin/Debug/netcoreapp2.0/day1.pdb
+/Users/arve/git/adventofcode/dotnet/day1/obj/Debug/netcoreapp2.0/day1.csproj.CoreCompileInputs.cache
+/Users/arve/git/adventofcode/dotnet/day1/obj/Debug/netcoreapp2.0/day1.AssemblyInfoInputs.cache
+/Users/arve/git/adventofcode/dotnet/day1/obj/Debug/netcoreapp2.0/day1.AssemblyInfo.cs
+/Users/arve/git/adventofcode/dotnet/day1/obj/Debug/netcoreapp2.0/day1.dll
+/Users/arve/git/adventofcode/dotnet/day1/obj/Debug/netcoreapp2.0/day1.pdb
