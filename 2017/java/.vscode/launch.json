@@ -25,6 +25,17 @@
       "mainClass": "Day2",
       "projectName": "adventofcode 2017",
       "args": ""
+    },
+    {
+      "type": "java",
+      "name": "Day3 <adventofcode 2017>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "Day3",
+      "projectName": "adventofcode 2017",
+      "args": ""
     }
   ]
 }
