@@ -46,26 +46,31 @@ class Decompress {
 		return size;
 	}
 
-	public int complexDecompress() {
+	public long complexDecompress() {
 		return complexDecompress(str);
 	}
 
-	private int complexDecompress(String str) {
-		if (str.length() == 0) {
-			return 0;
+	private long complexDecompress(String str) {
+		long sum = 0;
+		int i = 0;
+		while (i < str.length()) {
+			// String workingStr = str.substring(i);
+			char first = str.charAt(i);
+			if (first != '(') {
+				sum += 1;
+				i += 1;
+				continue;
+			}
+			int x = str.indexOf('x', i);
+			int stop = str.indexOf(')', i);
+			int num = Integer.parseInt(str.substring(i + 1, x));
+			int times = Integer.parseInt(str.substring(x + 1, stop));
+			int end = stop + 1 + num;
+			String sub = str.substring(stop + 1, end);
+			long subSum = complexDecompress(sub);
+			sum += times * subSum;
+			i = end;
 		}
-		int start = str.indexOf('(');
-		if (start == -1) {
-			return str.length();
-		} else if (start > 0) {
-			return start + complexDecompress(str.substring(start));
-		}
-		int x = str.indexOf('x');
-		int end = str.indexOf(')');
-
-		int num = Integer.parseInt(str.substring(start + 1, x));
-		int multiply = Integer.parseInt(str.substring(x + 1, end));
-
-		return multiply * complexDecompress(str.substring(end + 1));
+		return sum;
 	}
 }
