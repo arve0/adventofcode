@@ -12,6 +12,7 @@ public class Day6 {
 
 		List<String> csv = Utils.readFile("input6.txt");
 		csv = csv.subList(1, csv.size());
+		timer.elapsed("file read");
 
 		List<Place> capitals = csv.stream()
 			.map(row -> new Place(row))
@@ -19,6 +20,7 @@ public class Day6 {
 			.distinct()
 			.sorted()
 			.collect(Collectors.toList());
+		timer.elapsed("rows parsed");
 
 		double speed = 7274; // km/h
 		double time = 0;
@@ -27,15 +29,16 @@ public class Day6 {
 			Place capital = capitals.get(i++);
 			// round trip, twice the time
 			time += 2 * capital.dist / speed;
-			System.out.println(String.format("%s %f (round-trip) %f (too, one-way)", capital, time, time - capital.dist / speed));
+			// System.out.println(String.format("%s %f (round-trip) %f (too, one-way)", capital, time, time - capital.dist / speed));
 		}
 		if (time - capitals.get(i).dist / speed < 24) {
 			System.out.println(i);
 		} else {
 			System.out.println(--i);
 		}
+		timer.elapsed("counted capitals");
 
-		timer.printElapsed();
+		timer.print();
 	}
 }
 

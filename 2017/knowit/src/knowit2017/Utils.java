@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Utils
@@ -22,6 +23,18 @@ public class Utils {
 		List<String> lines = null;
 		try {
 			lines = Files.readAllLines(path, Charset.forName("UTF-8"));
+		} catch (Exception e) {
+			System.out.println(e);
+			System.exit(1);
+		}
+		return lines;
+	}
+
+	public static Stream<String> readLines(String filename) {
+		Path path = Paths.get(filename);
+		Stream<String> lines = null;
+		try {
+			lines = Files.lines(path, Charset.forName("UTF-8"));
 		} catch (Exception e) {
 			System.out.println(e);
 			System.exit(1);
