@@ -1,3 +1,5 @@
+package knowit2017;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,8 @@ import java.util.Map;
  */
 public class Day4 {
 	public static void main(String[] args) {
+		Timer timer = new Timer();
+
 		List<String> words = Utils.readFile("input4.txt");
 
 		int count = 0;
@@ -15,9 +19,9 @@ public class Day4 {
 				count++;
 			}
 		}
-		"asdf".
 
 		System.out.println(count);
+		timer.printElapsed();
 	}
 
 	static boolean isPalindrom(String str) {

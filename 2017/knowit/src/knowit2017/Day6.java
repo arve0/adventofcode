@@ -1,3 +1,5 @@
+package knowit2017;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -6,6 +8,8 @@ import java.util.stream.Collectors;
  */
 public class Day6 {
 	public static void main(String[] args) throws Exception {
+		Timer timer = new Timer();
+
 		List<String> csv = Utils.readFile("input6.txt");
 		csv = csv.subList(1, csv.size());
 
@@ -30,6 +34,8 @@ public class Day6 {
 		} else {
 			System.out.println(--i);
 		}
+
+		timer.printElapsed();
 	}
 }
 

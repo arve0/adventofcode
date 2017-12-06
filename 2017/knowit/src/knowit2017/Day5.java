@@ -1,3 +1,4 @@
+package knowit2017;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,6 +7,8 @@ import java.util.List;
  */
 public class Day5 {
 	public static void main(String[] args) {
+		Timer timer = new Timer();
+
 		List<Integer> nums = new ArrayList<>();
 		nums.add(1); nums.add(2); nums.add(2);
 		Integer n = 3;
@@ -18,6 +21,7 @@ public class Day5 {
 
 		Long sum = nums.subList(0, (int) 1E6).stream().mapToLong(i -> i).sum();
 		System.out.println(sum);
+		timer.printElapsed();
 	}
 
 	static void addNTimes(List<Integer> nums, Integer n, Integer times) {

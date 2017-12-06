@@ -11,7 +11,7 @@
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
       "stopOnEntry": false,
-      "mainClass": "Day1",
+      "mainClass": "knowit2017.Day1",
       "projectName": "knowit 2017",
       "args": ""
     },
@@ -22,7 +22,7 @@
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
       "stopOnEntry": false,
-      "mainClass": "Day4",
+      "mainClass": "knowit2017.Day4",
       "projectName": "knowit 2017",
       "args": ""
     },
@@ -33,7 +33,7 @@
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
       "stopOnEntry": false,
-      "mainClass": "Day5",
+      "mainClass": "knowit2017.Day5",
       "projectName": "knowit 2017",
       "args": ""
     },
@@ -44,7 +44,7 @@
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
       "stopOnEntry": false,
-      "mainClass": "Day6",
+      "mainClass": "knowit2017.Day6",
       "projectName": "knowit 2017",
       "args": ""
     }

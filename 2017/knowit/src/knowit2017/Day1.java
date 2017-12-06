@@ -1,3 +1,4 @@
+package knowit2017;
 import java.util.List;
 
 /**
@@ -5,6 +6,8 @@ import java.util.List;
  */
 public class Day1 {
 	public static void main(String[] args) {
+		Timer timer = new Timer();
+
 		String bigram = "snnoowwffllaakke";
 		String bigramAnagram = "fnaewkfonklsawlo";
 
@@ -22,6 +25,7 @@ public class Day1 {
 				String gram = new NGram(word).ngram(n);
 				if (lookingFor.equals(gram)) {
 					System.out.println(n + "-" + word);
+					timer.printElapsed();
 					return;
 				}
 			}
