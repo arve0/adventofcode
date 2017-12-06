@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,10 +22,14 @@ public class Day6 {
 		while (time < 24) {
 			Place capital = capitals.get(i++);
 			// round trip, twice the time
-			time += 2 * capital.distanceToOslo() / speed;
-			System.out.println("visiting " + capital + " time: " + time);
+			time += 2 * capital.dist / speed;
+			System.out.println(String.format("%s %f (round-trip) %f (too, one-way)", capital, time, time - capital.dist / speed));
 		}
-		System.out.println(i / 2);
+		if (time - capitals.get(i).dist / speed < 24) {
+			System.out.println(i);
+		} else {
+			System.out.println(--i);
+		}
 	}
 }
 
