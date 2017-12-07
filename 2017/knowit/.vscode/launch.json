@@ -47,6 +47,17 @@
       "mainClass": "knowit2017.Day6",
       "projectName": "knowit 2017",
       "args": ""
+    },
+    {
+      "type": "java",
+      "name": "Day7 knowit 2017",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "knowit2017.Day7",
+      "projectName": "knowit 2017",
+      "args": ""
     }
   ]
 }
