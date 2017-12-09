@@ -9,47 +9,56 @@ import java.util.Set;
  * Day8
  */
 public class Day8 {
-	private final int LIMIT = (int) 1E7;
-	private Set<Integer> juletall = new HashSet<>();
+	private final long LIMIT = (long) 1E7;
+	private boolean[] juletall = new boolean[568];
+	private static Timer timer = new Timer();
 
 	public static void main(String[] args) {
-		Timer timer = new Timer();
-		new Day8();
-		timer.elapsed();
+		int i = 0;
+		while (i < 100) {
+			new Day8();
+			timer.elapsed();
+			i++;
+		}
 		timer.print();
 	}
 
 	Day8() {
-		juletall.add(1);
+		juletall[0] = false;
+		juletall[1] = true;
 
-		for (int i = 2; i <= LIMIT; i++) {
+		long sum = 0;
+		for (int i = 1; i < 568; i++) {
 			if (isJuletall(i)) {
-				juletall.add(i);
+				juletall[i] = true;
+				sum += i;
 			}
 		}
 
-		System.out.println(juletall.stream().mapToLong(Integer::longValue).sum());
+		for (long i = 568; i <= LIMIT; i++) {
+			int j = sumDigits(i);
+			if (juletall[j]) {
+				sum += i;
+			}
+		}
+
+		System.out.println(sum);
 	}
 
 
-	private boolean isJuletall(int i) {
-		if (juletall.contains(i)) {
-			return true;
-		}
+	private boolean isJuletall(long i) {
+		Set<Long> sequence = new HashSet<>();
 
-		Set<Integer> sequence = new HashSet<>();
-
-		int prev = i;
-		int next_ = i;
+		long prev = i;
+		long next_ = i;
 
 		do {
 			prev = next_;
-			next_ = next(prev);
-			if (next_ > LIMIT) {
+			next_ = sumDigits(prev);
+
+			if (sequence.contains(next_)) {
 				return false;
-			} else if (sequence.contains(next_)) {
-				return false;
-			} else if (juletall.contains(next_)) {
+			} else if (next_ == 1) {
 				return true;
 			}
 			sequence.add(prev);
@@ -58,20 +67,12 @@ public class Day8 {
 		return false;
 	}
 
-	private int next(int i ) {
-		return getDigits(i).stream()
-			.mapToInt(d -> d * d)
-			.sum();
-	}
-
-	private List<Integer> getDigits(int i) {
-		List<Integer> digits_ = new LinkedList<>();
-
+	private int sumDigits(long i) {
+		int sum = 0;
 		while (i > 0) {
-			digits_.add(i % 10);
+			sum += (i % 10) * (i % 10);
 			i /= 10;
 		}
-
-		return digits_;
+		return sum;
 	}
 }
