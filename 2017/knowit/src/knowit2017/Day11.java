@@ -43,15 +43,11 @@ public class Day11 {
 	}
 
 	private int reverse(int n) {
-		int e = 1;
-		while (e * 10 <= n) {
-			e *= 10;
-		}
 		int rev = 0;
-		while (e >= 1) {
-			rev += (n % 10) * e;
+		while (n > 0) {
+			rev *= 10;
+			rev += n % 10;
 			n /= 10;
-			e /= 10;
 		}
 		return rev;
 	}
