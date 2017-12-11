@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class Day10 {
 	public static void main(String[] args) {
+		Timer t = new Timer();
 		List<Integer> remaining = new ArrayList<>();
 
 		for (int i = 1; i <= 1500; i += 2) {
@@ -25,6 +26,9 @@ public class Day10 {
 			i %= remaining.size();
 		}
 
+		t.elapsed();
+
 		System.out.println(remaining);
+		t.print();
 	}
 }

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Timer {
-	long lastTime = System.nanoTime();
-	List<Long> elapsedTimes = new ArrayList<>();
-	List<String> what = new ArrayList<>();
+	private long lastTime = System.nanoTime();
+	private List<Long> elapsedTimes = new ArrayList<>();
+	private List<String> what = new ArrayList<>();
 
 	public void elapsed() {
 		elapsedTimes.add(System.nanoTime() - lastTime);
@@ -35,5 +35,10 @@ public class Timer {
 			}
 			System.out.println(out);
 		}
+	}
+
+	public void elapsedPrint() {
+		elapsed();
+		print();
 	}
 }
