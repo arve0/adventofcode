@@ -1,5 +1,7 @@
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
@@ -19,4 +21,16 @@ public class Utils {
   public static Stream<String> readLines(String filename) throws IOException {
     return Files.lines(Paths.get(filename));
   }
+
+	public static List<String> readLinesToList(String filename) {
+		Path path = Paths.get(filename);
+		List<String> lines = null;
+		try {
+			lines = Files.readAllLines(path, Charset.forName("UTF-8"));
+		} catch (Exception e) {
+			System.out.println(e);
+			System.exit(1);
+		}
+		return lines;
+	}
 }
