@@ -1,51 +1,81 @@
+import java.util.Arrays;
+import java.util.Collections;
+
 /**
  * Day3
  */
 public class Day3 {
+
   public static void main(String[] args) {
-    int counter = 1;
-    int number = 1;
-    int goal = 325489;
+    Map map = new Map();
+    System.out.println(map.fill());
 
-    Tuple<Integer, Integer> coordinate = new Tuple<>(0, 0);
+    map = new Map();
+    System.out.println(map.fill2());
+  }
+}
 
-    while (number < goal) {
-      if (counter % 2 == 0) {
-        coordinate.first -= counter;
-        coordinate.second -= counter;
-        number += 2 * counter;
-        counter++;
-      } else {
-        coordinate.first += counter;
-        coordinate.second += counter;
-        number += 2 * counter;
-        counter++;
-      }
-    }
+class Map {
+  int counter = 1;
+  int goal = 325489;
+  int size = (int) Math.sqrt(goal) + 1;
+  int[][] map = new int[size][size];
+  int start = size / 2;
+  int[] coordinate = { start, start };
+  int[][] directions = new int[][]{
+    { 0 , -1 }, // south
+    { 1, 0 },   // east
+    { 0, 1 },   // north
+    { -1, 0 },  // west
+  };
 
-    counter--;
+  Map() {
+    map[start][start] = 1;
+  }
 
-    int diff = number - goal;
-    if (coordinate.first < 0) {
-      // lower corner
-      if (diff < counter) {
-        // closest path
-        coordinate.second += diff;
-      } else {
-        coordinate.second += counter;
-        coordinate.first += diff - counter;
-      }
+  int[] getNextCoordinate() {
+    int xx = coordinate[0] + directions[1][0];
+    int yy = coordinate[1] + directions[1][1];
+
+    if (map[xx][yy] == 0) {
+      Collections.rotate(Arrays.asList(directions), -1);
     } else {
-      // higher corner
-      if (diff < counter) {
-        // closest path
-        coordinate.second -= diff;
-      } else {
-        coordinate.second -= counter;
-        coordinate.first -= diff - counter;
-      }
+      xx = coordinate[0] + directions[0][0];
+      yy = coordinate[1] + directions[0][1];
     }
 
-    System.out.println(Math.abs(coordinate.first) + Math.abs(coordinate.second));
+    coordinate[0] = xx;
+    coordinate[1] = yy;
+
+    return new int[]{ xx, yy };
+  }
+
+  int fill() {
+    int[] xy = { 0, 0 };
+    while (goal > counter++) {
+      xy = getNextCoordinate();
+      map[xy[0]][xy[1]] = counter;
+    }
+    return Math.abs(xy[0] - start) + Math.abs(xy[1] - start);
+  }
+
+  int fill2() {
+    int[] xy = { 0, 0 };
+    int value;
+    do {
+      xy = getNextCoordinate();
+      value = 0;
+      for (int x = -1; x <= 1; x++) {
+        for (int y = -1; y <= 1; y++) {
+          if (x == 0 && y == 0) {
+            continue;
+          }
+          value += map[xy[0] + x][xy[1] + y];
+        }
+      }
+      map[xy[0]][xy[1]] = value;
+    } while (goal > value);
+
+    return value;
   }
 }
