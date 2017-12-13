@@ -6,6 +6,9 @@ import java.io.IOException;
 public class Day5 {
 
   public static void main(String[] args) throws IOException {
+
+
+
     int[] jumps = Utils.readLines("input5.txt")
       .mapToInt(Integer::parseInt)
       .toArray();
