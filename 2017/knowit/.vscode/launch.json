@@ -146,6 +146,17 @@
       "mainClass": "knowit2017.Day15",
       "projectName": "knowit 2017",
       "args": ""
+    },
+    {
+      "type": "java",
+      "name": "Day16 knowit 2017",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "knowit2017.Day16",
+      "projectName": "knowit 2017",
+      "args": ""
     }
   ]
 }
