@@ -80,6 +80,17 @@
       "mainClass": "Day7",
       "projectName": "adventofcode 2017",
       "args": ""
+    },
+    {
+      "type": "java",
+      "name": "Day8 <adventofcode 2017>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "Day8",
+      "projectName": "adventofcode 2017",
+      "args": ""
     }
   ]
 }
