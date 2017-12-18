@@ -41,7 +41,7 @@ public class Day18 {
 		String s = "";
 
 		for (int i = 0; i < msg.length(); i += 8) {
-			int ch = 0;
+			char ch = 0;
 			for (int j = 0; j < 8; j++) {
 				int power = 7 - (j % 8);
 				char a = msg.charAt(i + j);
@@ -50,7 +50,7 @@ public class Day18 {
 					ch += Math.pow(2, power);
 				}
 			}
-			s += (char) ch;
+			s += ch;
 		}
 
 		return s;
