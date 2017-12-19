@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalInt;
 import java.util.stream.Collectors;
 
 /**
@@ -69,13 +68,12 @@ public class Day19 {
 			.map(a -> a.getValue())
 			.collect(Collectors.toList());
 
-		OptionalInt minx = lines.stream()
+		int min = lines.stream()
 			.flatMap(a -> a.stream())
 			.mapToInt(a -> a)
-			.min();
-		int min = minx.getAsInt();
+			.min().getAsInt();
 
-			for (List<Integer> line : lines) {
+		for (List<Integer> line : lines) {
 			Collections.sort(line, Collections.reverseOrder());
 
 			int max = Collections.max(line);
