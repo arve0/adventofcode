@@ -182,6 +182,39 @@
     },
     {
       "type": "java",
+      "name": "Day19 knowit 2017",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "knowit2017.Day19",
+      "projectName": "knowit 2017",
+      "args": ""
+    },
+    {
+      "type": "java",
+      "name": "Day20 knowit 2017",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "knowit2017.Day20",
+      "projectName": "knowit 2017",
+      "args": ""
+    },
+    {
+      "type": "java",
+      "name": "Day21 knowit 2017",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "knowit2017.Day21",
+      "projectName": "knowit 2017",
+      "args": ""
+    },
+    {
+      "type": "java",
       "name": "Day22 knowit 2017",
       "request": "launch",
       "cwd": "${workspaceFolder}",
