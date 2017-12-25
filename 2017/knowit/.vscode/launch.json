@@ -223,6 +223,28 @@
       "mainClass": "knowit2017.Day22",
       "projectName": "knowit2017",
       "args": ""
+    },
+    {
+      "type": "java",
+      "name": "Day23 knowit 2017",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "knowit2017.Day23",
+      "projectName": "knowit 2017",
+      "args": ""
+    },
+    {
+      "type": "java",
+      "name": "Day24 knowit 2017",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "knowit2017.Day24",
+      "projectName": "knowit 2017",
+      "args": ""
     }
   ]
 }
