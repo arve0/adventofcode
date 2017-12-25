@@ -18,8 +18,14 @@ public class Utils {
       .collect(Collectors.toList());
   }
 
-  public static Stream<String> readLines(String filename) throws IOException {
-    return Files.lines(Paths.get(filename));
+  public static Stream<String> readLines(String filename) {
+		try {
+			return Files.lines(Paths.get(filename));
+		} catch (IOException e) {
+			System.out.println(e);
+			System.exit(1);
+			return Arrays.asList("").stream();
+		}
   }
 
 	public static List<String> readLinesToList(String filename) {
