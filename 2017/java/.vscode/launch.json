@@ -168,6 +168,28 @@
       "mainClass": "Day15",
       "projectName": "adventofcode 2017",
       "args": ""
+    },
+    {
+      "type": "java",
+      "name": "Day16 <adventofcode 2017>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "Day16",
+      "projectName": "adventofcode 2017",
+      "args": ""
+    },
+    {
+      "type": "java",
+      "name": "Day17 <adventofcode 2017>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "Day17",
+      "projectName": "adventofcode 2017",
+      "args": ""
     }
   ]
 }
