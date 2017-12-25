@@ -41,4 +41,8 @@ public class Timer {
 		elapsed();
 		print();
 	}
+
+	public void printElapsed() {
+		elapsedPrint();
+	}
 }
