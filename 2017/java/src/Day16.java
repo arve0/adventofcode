@@ -1,10 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -12,76 +10,46 @@ import java.util.Set;
  */
 public class Day16 {
   List<String> list = Arrays.asList("abcdefghijklmnop".split(""));
+  Set<List<String>> lists = new LinkedHashSet<>();
   String input = Utils.readLinesToList("input16.txt").get(0);
   Cmds cmds = new Cmds(input.split(","));
-  int pos = 0;
-  int len = list.size();
 
   public static void main(String[] args) {
     new Day16();
   }
 
   Day16() {
+    lists.add(new ArrayList<>(list));
+
     dance();
-    Collections.rotate(list, pos);
     System.out.println(String.join("", list));
 
-    Map<Integer, Integer> map = new HashMap<>();
-
-    int to = 0;
-    for (String s : list) {
-      int from = s.codePointAt(0) - 'a';
-      map.put(from, to++);
-    }
-
-    System.out.println(map);
-
-    Map<Integer, Integer> billionDances = new HashMap<>();
-
-    for (int i = 0; i < len; i++) {
-      to = i;
-      Set<Integer> repeat = new HashSet<>();
-      int limit = 1000_000_000;
-      for (int j = 0; j < limit; j++) {
-        to = map.get(to);
-        if (!repeat.add(to)) {
-          System.out.println(repeat.size());
-''          limit %= repeat.size();
+    int limit = 1000_000_000;
+    int i;
+    for (i = 1; i < limit; i++) {
+      if (!dance()) {
+        int n = i + 1;
+        while ((i + n) < limit) {
+          i += n;
         }
-        System.out.println(repeat);
+        n++;
       }
-      billionDances.put(i, to);
     }
-    System.out.println(billionDances);
+
+    System.out.print(String.join("", list));
   }
 
-  void dance() {
+  boolean dance() {
     for (Cmd cmd : cmds) {
       if (cmd.spin) {
-        spin(cmd);
+        Collections.rotate(list, cmd.s);
       } else if (cmd.exchange) {
-        exchange(cmd);
+        Collections.swap(list, cmd.xa, cmd.xb);
       } else if (cmd.partner) {
         partner(cmd);
       }
     }
-  }
-
-  void spin(Cmd cmd) {
-    pos += cmd.s;
-    pos %= len;
-  }
-
-  void exchange(Cmd cmd) {
-    int a = -pos + cmd.xa;
-    while (a < 0) {
-      a += len;
-    }
-    int b = -pos + cmd.xb;
-    while (b < 0) {
-      b += len;
-    }
-    Collections.swap(list, a, b);
+    return lists.add(new ArrayList<>(list));
   }
 
   void partner(Cmd cmd) {
