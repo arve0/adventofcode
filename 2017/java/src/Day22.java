@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -14,6 +17,8 @@ public class Day22 {
   Set<Coordinate> map = new HashSet<>();
   Worm worm = new Worm();
   int ITERATIONS = 10_000;
+  Map<Coordinate, State> map2 = new HashMap<>();
+  Worm2 worm2 = new Worm2();
 
   public static void main(String[] args) {
     new Day22();
@@ -38,6 +43,26 @@ public class Day22 {
 
     System.out.println(infections);
     // System.out.println(mapToString());
+
+    // part two
+    for (int i = 0; i < rows; i++) {
+      String row = input.get(i);
+      for (int j = 0; j < columns; j++) {
+        if (row.charAt(j) == '#') {
+          map2.put(new Coordinate(i - yOffset, j - xOffset), State.INFECTED);
+        }
+      }
+    }
+
+    infections = 0;
+    ITERATIONS = 10_000_000;
+    for (int i = 0; i < ITERATIONS; i++) {
+      if (worm2.burst(map2)) {
+        infections++;
+      }
+    }
+    System.out.println(infections);
+
   }
 
   String mapToString() {
@@ -81,6 +106,10 @@ enum Direction {
   public Direction left() {
     int i  = Math.floorMod(this.ordinal() - 1, values().length);
     return values()[i];
+  }
+
+  public Direction reverse() {
+    return values()[(this.ordinal() + 2) % values().length];
   }
 }
 
@@ -151,5 +180,42 @@ class Coordinate {
   @Override
   public int hashCode() {
     return y + x;
+  }
+}
+
+enum State {
+  WEAKENED, INFECTED, FLAGGED, CLEAN;
+
+  public State next() {
+    return values()[(this.ordinal() + 1) % values().length];
+  }
+}
+
+class Worm2 extends Worm {
+  boolean burst(Map<Coordinate, State> map) {
+    State s = map.get(position);
+
+    if (s == null) {
+      s = State.CLEAN;
+    }
+
+    switch (s) {
+      case CLEAN:
+        direction = direction.left();
+        break;
+      case WEAKENED:
+        // do not turn
+        break;
+      case INFECTED:
+        direction = direction.right();
+        break;
+      case FLAGGED:
+        direction = direction.reverse();
+        break;
+    }
+    map.put(position, s.next());
+    position = position.move(direction);
+
+    return s.next() == State.INFECTED ? true : false;
   }
 }
