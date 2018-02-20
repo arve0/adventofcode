@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,60 +8,90 @@ import java.util.stream.Collectors;
  * Day18
  */
 public class Day18 {
+
+  public static void main(String[] args) {
+    List<Long> tx = new ArrayList<>();
+    List<Long> rx = new ArrayList<>();
+
+    Duett program = new Duett(tx, rx);
+
+    while(program.tick()) { }
+    System.out.println(program.tx.get(program.tx.size() - 1));
+
+    Duett program2 = new Duett(rx, tx);
+
+    while(program.tick() || program2.tick()) { }
+    System.out.println(program2.sentCounter);
+  }
+}
+
+
+class Duett {
   Map<String, Long> registers = new HashMap<>();
   List<Instruction> instructions = Utils.readLines("input18.txt")
     .map(Instruction::new)
     .collect(Collectors.toList());
   int pos = 0;
-  long lastPlayed = 0;
+  List<Long> tx;
+  List<Long> rx;
+  int sentCounter = 0;
+  static long n = 0;
 
-  public static void main(String[] args) {
-    new Day18();
+  Duett(List<Long> tx, List<Long> rx) {
+    this.tx = tx;
+    this.rx = rx;
+
+    for (Instruction i : instructions) {
+      initializeRegister(i.x);
+      initializeRegister(i.y);
+    }
+
+    registers.put("p", n++);
   }
 
-  Day18() {
-    for (Instruction i : instructions) {
-      registers.put(i.x, 0L);
-      if (i.y != null && i.yy == null) {
-        registers.put(i.y, 0L);
-      }
+  boolean tick() {
+    Instruction instruction = instructions.get(pos);
+
+    if (!instruction.type.equals("jgz")) {
+      pos++;
     }
-    while (true) {
-      Instruction instruction = instructions.get(pos);
-      if (!instruction.type.equals("jgz")) {
-        pos++;
-      }
 
-      switch (instruction.type) {
-        case "set":
-          set(instruction);
-          break;
-        case "add":
-          add(instruction);
-          break;
-        case "mul":
-          mul(instruction);
-          break;
-        case "mod":
-          mod(instruction);
-          break;
-        case "jgz":
-          jgz(instruction);
-          break;
-        case "snd":
-          snd(instruction);
-          break;
+    switch (instruction.type) {
+      case "set":
+        set(instruction);
+        return true;
+      case "add":
+        add(instruction);
+        return true;
+      case "mul":
+        mul(instruction);
+        return true;
+      case "mod":
+        mod(instruction);
+        return true;
+      case "jgz":
+        jgz(instruction);
+        return true;
+      case "snd":
+        snd(instruction);
+        return true;
 
-        case "rcv":
-          if (registers.get(instruction.x) != 0) {
-            System.out.println(lastPlayed);
-            return;
-          }
-          break;
+      case "rcv":
+        boolean didReceive = rcv(instruction);
+        pos -= !didReceive ? 1 : 0;  // step back pos++ from above
+        return didReceive;
+    }
+    return false;
+  }
 
-        default:
-          break;
-      }
+  void initializeRegister(String r) {
+    if (r == null) {
+      return;
+    }
+    try {
+      Long.parseLong(r);
+    } catch(Exception e) {
+      registers.put(r, 0L);
     }
   }
 
@@ -97,7 +128,8 @@ public class Day18 {
   }
 
   void jgz(Instruction i) {
-    if (registers.get(i.x) <= 0) {
+    Long val = i.xx != null ? i.xx : registers.get(i.x);
+    if (val <= 0) {
       pos++;
       return;
     }
@@ -109,11 +141,21 @@ public class Day18 {
   }
 
   void snd(Instruction i) {
-    lastPlayed = registers.get(i.x);
+    tx.add(registers.get(i.x));
+    sentCounter++;
+  }
+
+  boolean rcv(Instruction i) {
+    if (rx.size() == 0) {
+      return false;
+    }
+    registers.put(i.x, rx.remove(0));
+    return true;
   }
 }
 
 class Instruction {
+  String str;
   String type;
   String x;
   String y;
@@ -121,6 +163,7 @@ class Instruction {
   Long yy;
 
   Instruction(String str) {
+    this.str = str;
     // snd X
     // rcv X
     // set X Y
