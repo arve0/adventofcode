@@ -7,7 +7,33 @@ import java.util.List;
 public class Day23 {
   public static void main(String[] args) {
     new CoProcessor().run();
+
+    // part two
+    int b = 105_700;
+    int c = b + 17_000;
+
+    int h = 0;
+    while (true) {
+      h += isMultiple(b) ? 1 : 0;
+      if (b == c) {
+        break;
+      }
+      b += 17;
+    }
+
+    System.out.println(h);
   }
+
+  static boolean isMultiple(int b) {
+    int largestPossibleMultiple = b / 2;
+    int d = 2;
+    while (d < largestPossibleMultiple) {
+      if (b % d == 0) return true;
+      d++;
+    }
+    return false;
+  }
+
 }
 
 class CoProcessor {
@@ -123,3 +149,51 @@ class IInstruction {
     }
   }
 }
+
+/** part two, input translated
+
+b = 105 700
+c = b + 17000
+
+while (true) {
+  f = 1
+  d = 2
+  do {
+    e = 2
+    do {
+      if (d * e - b == 0) f = 0
+      e++
+    } while (e - b != 0)
+    d++
+  } while (d - b != 0)
+  if (f == 0) h++
+  if (b - c == 0) exit
+  b += 17
+}
+
+optimized
+
+b = 105 700
+c = b + 17000
+
+isMultiple(b) {
+  d = 2
+  do {
+    e = 2
+    do {
+      if (d * e == b) return true
+      e++
+    } while (e < b / 2)
+    d++
+  } while (d < b / 2)
+  return false
+}
+
+while (true) {
+  h += isMultiple(b) ? 1 : 0;
+  if (b == c) break;
+  b += 17
+}
+
+*/
+
