@@ -23,19 +23,18 @@ public class Day17 {
     }
     System.out.println(numbers.get(pos + 1));
 
-    // problem 2, not possible to insert at index 0
-    // -> index 1 is after 0
-    int n = numbers.get(1);
-    while (i < 50_000_000) {
-      pos += jump;
-      pos %= ++i;
-      if (pos == 1) {
-        n = i;
+    pos = 0;
+    int length = 1;
+    int toInsert = 50_000_000;
+    int insertedNextToZero = 0;
+    while ((length - 1) < toInsert) {
+      pos = (pos + jump) % length;
+      if (pos == 0) {
+        insertedNextToZero = length;
       }
+      length++;
+      pos++;
     }
-    System.out.println(n);
-    // 28954212 too high
-    // 6223059 too low
-    // 6598349 wrong
+    System.out.println(insertedNextToZero);
   }
 }
