@@ -1,18 +1,24 @@
 fn main () {
     let lines = get_input().split("\n");
 
-    assert!(get_area("2x3x4") == 58);
-    assert!(get_area("1x1x10") == 43);
+    assert!(calculate_area("2x3x4") == 58);
+    assert!(calculate_area("1x1x10") == 43);
+
+    assert!(calculate_ribbon("2x3x4") == 34);
+    assert!(calculate_ribbon("1x1x10") == 14);
 
     let mut total_paper = 0;
+    let mut total_ribbon = 0;
     for line in lines {
-        total_paper += get_area(line);
+        total_paper += calculate_area(line);
+        total_ribbon += calculate_ribbon(line);
     }
 
     println!("{}", total_paper);
+    println!("{}", total_ribbon);
 }
 
-fn get_area(s: &str) -> i32 {
+fn calculate_area(s: &str) -> i32 {
     let numbers: Vec<i32> = s.split("x").map(parse_int).collect();
 
     let mut area = 0;
@@ -33,6 +39,13 @@ fn get_area(s: &str) -> i32 {
     area += min_area / 2;
 
     area
+}
+
+fn calculate_ribbon(s: &str) -> i32 {
+    let mut numbers = s.split("x").map(parse_int).collect::<Vec<i32>>();
+    numbers.sort();
+
+    2 * numbers[0] + 2 * numbers[1] + numbers.iter().fold(1, |vol, x| vol * x)
 }
 
 fn parse_int(number: &str) -> i32 {
