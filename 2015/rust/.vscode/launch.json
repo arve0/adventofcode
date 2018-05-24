@@ -7,11 +7,11 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug",
+            "name": "Debug current",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=d1"
+                    "--bin=current"
                 ]
             },
             "args": [],

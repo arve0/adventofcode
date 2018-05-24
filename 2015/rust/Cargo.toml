@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Arve Seljebu <arve.seljebu@gmail.com>"]
 
 [[bin]]
-name = "d1"
-path = "src/d1.rs"
+name = "current"
+path = "src/d2.rs"
 
 [dependencies]
