@@ -5,6 +5,7 @@ authors = ["Arve Seljebu <arve.seljebu@gmail.com>"]
 
 [[bin]]
 name = "current"
-path = "src/d3.rs"
+path = "src/d4.rs"
 
 [dependencies]
+md5 = "0.3.7"
