@@ -11,7 +11,20 @@
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=current"
+                    "--bin=d6"
+                ]
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Playground",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=playground"
                 ]
             },
             "args": [],

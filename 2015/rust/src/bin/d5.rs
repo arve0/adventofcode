@@ -1,4 +1,11 @@
+extern crate aoc15;
+
+use aoc15::time_since;
+use std::time::Instant;
+
 fn main () {
+    let start = Instant::now();
+
     assert!(has_three_vowels("aei"));
     assert!(has_three_vowels("xazegov"));
     assert!(has_three_vowels("aeiouaeiouaeiou"));
@@ -18,7 +25,11 @@ fn main () {
     assert!(!is_nice("haegwjzuvuyypxyu"));
     assert!(!is_nice("dvszwmarrgswjxmb"));
 
-    let mut nice_strings = get_input().split("\n").filter(|x| is_nice(x)).count();
+    let lines = get_input().split("\n");
+
+    let mut nice_strings = lines.clone().filter(|x| is_nice(x)).count();
+
+    time_since(start);
 
     println!("{}", nice_strings);
 
@@ -27,8 +38,9 @@ fn main () {
     assert!(!is_nice_2("uurcxstgmygtbstg"));
     assert!(!is_nice_2("ieodomkazucvgmuy"));
 
-    nice_strings = get_input().split("\n").filter(|x| is_nice_2(x)).count();
+    nice_strings = lines.filter(|x| is_nice_2(x)).count();
 
+    time_since(start);
     println!("{}", nice_strings);
 }
 
@@ -44,9 +56,12 @@ fn has_three_vowels(s: &str) -> bool {
         if vowels.contains(c) {
             count += 1;
         }
+        if count >= 3 {
+            return true;
+        }
     }
 
-    count >= 3
+    false
 }
 
 fn has_same_letter_twise(s: &str) -> bool {
@@ -67,18 +82,18 @@ fn has_bad_letters(s: &str) -> bool {
 }
 
 fn is_nice_2(s: &str) -> bool {
-    contains_pair(s.to_string()) && has_aba(s)
+    contains_pair(s) && has_aba(s)
 }
 
-fn contains_pair(s: String) -> bool {
+fn contains_pair(s: &str) -> bool {
+    let mut remaining = s[2..].to_string();
+
     for i in 0..(s.len() - 3) {
         let a = &s[i..(i + 2)];
-        for j in (i + 2)..(s.len() - 1) {
-            let b = &s[j..(j + 2)];
-            if a == b {
-                return true
-            }
+        if remaining.contains(a) {
+            return true;
         }
+        remaining = remaining[1..].to_string();
     }
 
     false
