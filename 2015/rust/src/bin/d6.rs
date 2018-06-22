@@ -53,7 +53,7 @@ fn parse_kind(text: &str) -> CmdKind {
 }
 
 fn parse_ranges(text: &str) -> (Range<usize>, Range<usize>) {
-    let digits: Vec<usize> = get_numbers(text);
+    let digits = get_numbers(text);
 
     (digits[0] .. digits[2] + 1, digits[1] .. digits[3] + 1)
 }

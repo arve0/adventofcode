@@ -1,26 +1,18 @@
-use std::time::Instant;
+extern crate regex;
+use regex::Regex;
 
 fn main() {
-    let start = Instant::now();
+    let max = usize::max_value();
+    let text = format!("text 123 {} {}1 -1", max, max);
 
-   std::thread::sleep(std::time::Duration::from_millis(1233));
-
-    time_since(start);
+    assert_eq!(get_numbers(&text), vec![123, max]);
 }
 
-fn time_since(start: Instant) {
-    println!("{:?}", start);
-    let elapsed = start.elapsed();
-    println!("{:?}", elapsed);
-    println!("Elapsed: {} ms", elapsed.as_secs() * 1_000 + elapsed.subsec_millis() as u64);
-
-    elapsed.pretty_print();
-}
-
-struct Duration(std::time::Duration);
-
-impl Duration {
-    fn pretty_print(&self) {
-        println!("{} s, {} ms, {}, µs {}, ns", self.secs, self.subsec_millis(), self.subsec_micros(), self.nanos);
-    }
+pub fn get_numbers(text: &str) -> Vec<usize> {
+    let re = Regex::new(r"\-?\d{1,}").unwrap();
+    re.captures_iter(text)
+        .flat_map(|capture| capture.get(0))
+        .map(|digit| digit.as_str())
+        .flat_map(|s| s.parse::<usize>())
+        .collect()
 }

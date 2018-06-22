@@ -5,9 +5,11 @@ use std::ops::Range;
 use std::time::Instant;
 
 pub fn get_numbers(text: &str) -> Vec<usize> {
-    let re = Regex::new(r"\d{1,}").unwrap();
+    let re = Regex::new(r"\-?\d{1,}").unwrap();
     re.captures_iter(text)
-        .map(|d| d.get(0).unwrap().as_str().parse::<usize>().unwrap())
+        .flat_map(|capture| capture.get(0))
+        .map(|digit| digit.as_str())
+        .flat_map(|s| s.parse::<usize>())
         .collect()
 }
 
@@ -33,4 +35,17 @@ pub fn time_since(start: Instant) {
     let elapsed = start.elapsed();
     println!("{:?}", elapsed);
     println!("Elapsed: {} ms", elapsed.as_secs() * 1_000 + elapsed.subsec_millis() as u64);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parses_all_valid_numbers() {
+        let max = usize::max_value();
+        let text = format!("text 123 {} {}1 -1", max, max);
+
+        assert_eq!(get_numbers(&text), vec![123, max]);
+    }
 }
