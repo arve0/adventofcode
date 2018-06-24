@@ -3,13 +3,14 @@ extern crate regex;
 use regex::Regex;
 use std::ops::Range;
 use std::time::Instant;
+use std::str::FromStr;
 
-pub fn get_numbers(text: &str) -> Vec<usize> {
+pub fn get_numbers<T: FromStr>(text: &str) -> Vec<T> {
     let re = Regex::new(r"\-?\d{1,}").unwrap();
     re.captures_iter(text)
         .flat_map(|capture| capture.get(0))
         .map(|digit| digit.as_str())
-        .flat_map(|s| s.parse::<usize>())
+        .flat_map(|s| s.parse::<T>())
         .collect()
 }
 
