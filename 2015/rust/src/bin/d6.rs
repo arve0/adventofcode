@@ -3,9 +3,10 @@ extern crate aoc15;
 use aoc15::get_numbers;
 use aoc15::map_mut_2d;
 use std::ops::Range;
+use std::str::FromStr;
 
 fn main () {
-    let cmd = str_to_cmd("turn on 887,9 through 959,629");
+    let cmd = "turn on 887,9 through 959,629".parse::<Cmd>().unwrap();
 
     assert_eq!(cmd.text, "turn on 887,9 through 959,629");
     assert_eq!(cmd.kind, CmdKind::ON);
@@ -13,7 +14,7 @@ fn main () {
     assert_eq!(cmd.yrange, 9..630);
 
     let mut lights = vec![vec![false; 1000]; 1000];
-    for cmd in get_input().split("\n").map(str_to_cmd) {
+    for cmd in get_input().split("\n").flat_map(Cmd::from_str) {
         match cmd.kind {
             CmdKind::ON => map_mut_2d(&mut lights, cmd.xrange, cmd.yrange, |_| true),
             CmdKind::OFF => map_mut_2d(&mut lights, cmd.xrange, cmd.yrange, |_| false),
@@ -23,7 +24,7 @@ fn main () {
     println!("{}", count(&lights));
 
     let mut lights = vec![vec![0u32; 1000]; 1000];
-    for cmd in get_input().split("\n").map(str_to_cmd) {
+    for cmd in get_input().split("\n").flat_map(Cmd::from_str) {
         match cmd.kind {
             CmdKind::ON => map_mut_2d(&mut lights, cmd.xrange, cmd.yrange, |x| x + 1),
             CmdKind::OFF => map_mut_2d(&mut lights, cmd.xrange, cmd.yrange, |x| if *x == 0u32 { *x } else { *x - 1 }),
@@ -33,13 +34,19 @@ fn main () {
     println!("{}", count_2(&lights));
 }
 
-fn str_to_cmd(input: &str) -> Cmd {
-    let text = input.to_string();
+#[derive(Debug)]
+struct CmdParseError(());
+impl FromStr for Cmd {
+    type Err = CmdParseError;
 
-    let kind = parse_kind(&text);
-    let (xrange, yrange) = parse_ranges(&text);
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let text = s.to_string();
 
-    Cmd { text, kind, xrange, yrange }
+        let kind = parse_kind(&text);
+        let (xrange, yrange) = parse_ranges(&text);
+
+        Ok(Cmd { text, kind, xrange, yrange })
+    }
 }
 
 fn parse_kind(text: &str) -> CmdKind {
