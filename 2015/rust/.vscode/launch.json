@@ -11,7 +11,7 @@
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=d6"
+                    "--bin=d7"
                 ]
             },
             "args": [],
