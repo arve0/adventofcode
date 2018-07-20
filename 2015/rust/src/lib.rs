@@ -47,6 +47,6 @@ mod tests {
         let max = usize::max_value();
         let text = format!("text 123 {} {}1 -1", max, max);
 
-        assert_eq!(get_numbers(&text), vec![123, max]);
+        assert_eq!(get_numbers::<usize>(&text), vec![123, max]);
     }
 }

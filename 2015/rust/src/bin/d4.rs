@@ -1,11 +1,20 @@
 extern crate md5;
+extern crate aoc15;
+
+use aoc15::time_since;
+use std::time::Instant;
 
 fn main () {
     assert!(hash("abcdef609043").starts_with("000001dbbfa"));
     assert!(find_first_coin("pqrstuv") == 1048970);
 
+    let start = Instant::now();
     println!("{}", find_first_coin("iwrupvqb"));
+    time_since(start);
+
+    let start = Instant::now();
     println!("{}", find_super_coin("iwrupvqb"));
+    time_since(start);
 }
 
 fn hash(s: &str) -> String {
