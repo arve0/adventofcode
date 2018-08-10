@@ -1,5 +1,13 @@
+extern crate json;
+
+use json::number::Number;
+
 fn main() {
     let sum = sum_all_numbers(get_input());
+    println!("{}", sum);
+
+    let root = json::parse(get_input()).unwrap();
+    let sum = deep_reduce_except_red(&root, |s, v| s + v, 0);
     println!("{}", sum);
 }
 
@@ -19,6 +27,35 @@ fn sum_all_numbers(s: &str) -> isize {
     }
 
     sum
+}
+
+fn deep_reduce_except_red<F, T>(obj: &json::JsonValue, reducer: F, initial_value: T) -> T
+where
+    T: From<Number>,
+    F: Fn(T, T) -> T,
+{
+    let mut to_traverse: Vec<_> = obj.entries().map(|(_, value)| value).collect();
+    let mut reduced = initial_value;
+
+    while let Some(value) = to_traverse.pop() {
+        match value {
+            json::JsonValue::Array(arr) => to_traverse.extend(arr.iter()),
+            json::JsonValue::Object(_) => {
+                if !is_red(value) {
+                    to_traverse.extend(value.entries().map(|(_, value)| value))
+                }
+            },
+            json::JsonValue::Number(val) => {
+                reduced = reducer(reduced, (*val).into());
+            },
+            _ => {},
+        }
+    }
+    reduced
+}
+
+fn is_red(obj: &json::JsonValue) -> bool {
+    obj.entries().any(|(_, v)| v == "red")
 }
 
 fn get_input() -> &'static str {
