@@ -7,3 +7,15 @@ pub fn read_input(filename: &str, separator: &str) -> Vec<String> {
         .map(String::from)
         .collect()
 }
+
+pub fn digits(mut n: i64) -> Vec<i64> {
+    let mut digits = Vec::new();
+    n = n.abs();
+
+    while n != 0 {
+        digits.insert(0, n % 10);
+        n /= 10;
+    }
+
+    digits
+}
