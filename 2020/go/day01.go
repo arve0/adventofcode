@@ -9,6 +9,14 @@ import (
 )
 
 func main() {
+	// numbers := []int{
+	// 	1721,
+	// 	979,
+	// 	366,
+	// 	299,
+	// 	675,
+	// 	1456,
+	// }
 	file, _ := os.Open("input01.txt")
 	numbers := ToIntSlice(file)
 	sort.Ints(numbers)
@@ -24,6 +32,27 @@ func main() {
 			fmt.Printf("%v * %v = %v\n", n, wanted, solution)
 			break
 		}
+	}
+
+	for i, n := range numbers {
+		for j, m := range numbers[i+1:] {
+			wanted := 2020 - n - m
+
+			if wanted < 0 {
+				break
+			}
+
+			rest := numbers[i+j+2:]
+			pos := sort.SearchInts(rest, wanted)
+
+			if pos != len(rest) && rest[pos] == wanted {
+				solution := n * m * wanted
+				fmt.Printf("Found %v + %v + %v = 2020\n", n, m, wanted)
+				fmt.Printf("%v * %v * %v = %v\n", n, m, wanted, solution)
+				break
+			}
+		}
+
 	}
 }
 
