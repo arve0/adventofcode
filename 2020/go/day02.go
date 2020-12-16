@@ -13,22 +13,30 @@ func main() {
 1-3 b: cdefg
 2-9 c: ccccccccc`)
 	testOk := 0
+	testOk2 := 0
 	for _, p := range testInput {
 		if ok(p) {
 			testOk++
 		}
+		if ok2(p) {
+			testOk2++
+		}
 	}
-	fmt.Printf("Test ok: %v\n", testOk)
+	fmt.Printf("Ok: %v, %v\n", testOk, testOk2)
 
 	inputBytes, _ := ioutil.ReadFile("input02.txt")
 	input := parse(string(inputBytes))
 	testOk = 0
+	testOk2 = 0
 	for _, p := range input {
 		if ok(p) {
 			testOk++
 		}
+		if ok2(p) {
+			testOk2++
+		}
 	}
-	fmt.Printf("Ok: %v\n", testOk)
+	fmt.Printf("Ok: %v, %v\n", testOk, testOk2)
 }
 
 type passwordWithPolicy struct {
@@ -61,6 +69,16 @@ func parse(input string) []passwordWithPolicy {
 	return passwords
 }
 
+func mustAtoi(s string) int {
+	n, err := strconv.Atoi(s)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return n
+}
+
 func ok(p passwordWithPolicy) bool {
 	count := 0
 
@@ -73,12 +91,13 @@ func ok(p passwordWithPolicy) bool {
 	return count >= p.min && count <= p.max
 }
 
-func mustAtoi(s string) int {
-	n, err := strconv.Atoi(s)
-
-	if err != nil {
-		panic(err)
+func ok2(p passwordWithPolicy) bool {
+	if p.min-1 > len(p.password) || p.max-1 > len(p.password) {
+		return false
 	}
 
-	return n
+	minSame := p.ch == p.password[p.min-1]
+	maxSame := p.ch == p.password[p.max-1]
+
+	return maxSame != minSame
 }
