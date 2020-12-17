@@ -7,12 +7,28 @@ import (
 )
 
 func main() {
-	forrest, width := parse(testInput())
-	fmt.Println(solve(forrest, width))
+	testForrest, testWidth := parse(testInput())
+	fmt.Println(solve(testForrest, testWidth, coordinate{3, 1}))
 
 	input, _ := ioutil.ReadFile("input03.txt")
-	forrest, width = parse(input)
-	fmt.Println(solve(forrest, width))
+	forrest, width := parse(input)
+	fmt.Println(solve(forrest, width, coordinate{3, 1}))
+
+	options := []coordinate{
+		{1, 1},
+		{3, 1},
+		{5, 1},
+		{7, 1},
+		{1, 2},
+	}
+	n := 1
+	m := 1
+	for _, option := range options {
+		m *= solve(testForrest, testWidth, option)
+		n *= solve(forrest, width, option)
+	}
+	fmt.Println(m)
+	fmt.Println(n)
 }
 
 func parse(input []byte) ([]int, int) {
@@ -34,9 +50,8 @@ func parse(input []byte) ([]int, int) {
 	return forrest, lineWidth
 }
 
-func solve(forrest []int, lineWidth int) int {
+func solve(forrest []int, lineWidth int, velocity coordinate) int {
 	pos := coordinate{}
-	velocity := coordinate{3, 1}
 	hit := 0
 
 	for int(pos.y+velocity.y) < len(forrest) {
