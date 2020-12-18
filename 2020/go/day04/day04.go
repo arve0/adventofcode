@@ -92,7 +92,7 @@ func isValidPassport(p passport) bool {
 		isValidHeight,
 		isValidHairColor,
 		isValidEyeColor,
-		isValidPassportId,
+		isValidPassportID,
 	}
 
 	for _, rule := range rules {
@@ -168,7 +168,7 @@ func isValidHairColor(p passport) bool {
 	return true
 }
 
-func isValidPassportId(p passport) bool {
+func isValidPassportID(p passport) bool {
 	pid := p.properties["pid"]
 	if len(pid) != 9 {
 		return false
