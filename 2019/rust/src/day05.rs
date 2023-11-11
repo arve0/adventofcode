@@ -130,12 +130,12 @@ fn state_machine(mut bin: Vec<i64>, input: i64) -> i64 {
 }
 
 #[derive(Debug)]
-enum ParamMode {
+pub enum ParamMode {
     MEMORY,
     IMMIDIATE,
 }
 
-fn get_op_and_modes(pos: usize, bin: &Vec<i64>) -> (i64, ParamMode, ParamMode, ParamMode) {
+pub fn get_op_and_modes(pos: usize, bin: &Vec<i64>) -> (i64, ParamMode, ParamMode, ParamMode) {
     let n = bin[pos];
     let mut digits = lib::digits(n);
 
@@ -151,7 +151,7 @@ fn get_op_and_modes(pos: usize, bin: &Vec<i64>) -> (i64, ParamMode, ParamMode, P
     (op, c, b, a)
 }
 
-fn param_mode(n: i64) -> ParamMode {
+pub fn param_mode(n: i64) -> ParamMode {
     use ParamMode::*;
     assert!(n == 0 || n == 1);
 
